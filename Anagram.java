@@ -35,41 +35,15 @@ public class Anagram {
             return false;
         }
         
-        String temp = cleaned1; 
-        
-        int i = 0;
-        while (i < cleaned2.length()) {
-            char targetChar = cleaned2.charAt(i);
-            
-            int j = 0;
-            int foundIndex = -1; 
-            
-            while (j < temp.length()) {
-                if (temp.charAt(j) == targetChar) {
-                    foundIndex = j; 
-                    break;
-                }
-                j++;
-            }
-            
-            if (foundIndex == -1) {
-                return false; 
-            }
-            
-            String newTemp = "";
-            j = 0;
-            while (j < temp.length()) {
-                if (j != foundIndex) {
-                    newTemp = newTemp + temp.charAt(j);
-                }
-                j++;
-            }
-            temp = newTemp;
-            
-            i++;
-        }
-        
-        return temp.length() == 0;
+        // 2. מיון התווים (הפתרון האמין ביותר)
+        char[] chars1 = cleaned1.toCharArray();
+        char[] chars2 = cleaned2.toCharArray();
+
+        java.util.Arrays.sort(chars1);
+        java.util.Arrays.sort(chars2);
+
+        // 3. השוואת המערכים הממוינים
+        return java.util.Arrays.equals(chars1, chars2);
 	}
 	   
 	// Returns a preprocessed version of the given string: all the letter characters are converted
