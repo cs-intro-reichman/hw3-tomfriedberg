@@ -28,7 +28,7 @@ public class Anagram {
 
 	// Returns true if the two given strings are anagrams, false otherwise.
 	public static boolean isAnagram(String str1, String str2) {
-		
+
         String cleaned1 = preProcess(str1);
         String cleaned2 = preProcess(str2);
 
@@ -36,14 +36,39 @@ public class Anagram {
             return false;
         }
         
-        // שימוש במיון במקום בלולאות כפולות כדי לפתור את Test 5 (complex anagram)
-        char[] chars1 = cleaned1.toCharArray();
-        char[] chars2 = cleaned2.toCharArray();
-
-        java.util.Arrays.sort(chars1);
-        java.util.Arrays.sort(chars2);
-
-        return java.util.Arrays.equals(chars1, chars2);
+        // שימוש במערך בגודל 256 (לכל תווי ASCII/Unicode) או 26 (לאותיות קטנות בלבד).
+        // נשתמש ב-26 כיוון ש-preProcess מבטיח רק אותיות קטנות.
+        int[] letterCounts = new int[26];
+        
+        // ספירת מחרוזת 1 (+1)
+        int i = 0;
+        while (i < cleaned1.length()) {
+            char c = cleaned1.charAt(i);
+            if (c != ' ') { // מתעלמים מרווחים (אם נותרו כאלה)
+                letterCounts[c - 'a']++;
+            }
+            i++;
+        }
+        
+        // חיסור מחרוזת 2 (-1)
+        i = 0;
+        while (i < cleaned2.length()) {
+            char c = cleaned2.charAt(i);
+            if (c != ' ') {
+                letterCounts[c - 'a']--;
+            }
+            i++;
+        }
+		
+        i = 0;
+        while (i < 26) {
+            if (letterCounts[i] != 0) {
+                return false;
+            }
+            i++;
+        }
+        
+        return true;
 	}
 	   
 	// Returns a preprocessed version of the given string: all the letter characters are converted
