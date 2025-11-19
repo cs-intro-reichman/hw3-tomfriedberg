@@ -28,21 +28,21 @@ public class Anagram {
 
 	// Returns true if the two given strings are anagrams, false otherwise.
 	public static boolean isAnagram(String str1, String str2) {
-		String cleaned1 = preProcess(str1);
+		
+        String cleaned1 = preProcess(str1);
         String cleaned2 = preProcess(str2);
 
         if (cleaned1.length() != cleaned2.length()) {
             return false;
         }
         
-        // 2. מיון התווים (הפתרון האמין ביותר)
+        // שימוש במיון במקום בלולאות כפולות כדי לפתור את Test 5 (complex anagram)
         char[] chars1 = cleaned1.toCharArray();
         char[] chars2 = cleaned2.toCharArray();
 
         java.util.Arrays.sort(chars1);
         java.util.Arrays.sort(chars2);
 
-        // 3. השוואת המערכים הממוינים
         return java.util.Arrays.equals(chars1, chars2);
 	}
 	   

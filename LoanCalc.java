@@ -66,14 +66,19 @@ public class LoanCalc {
 	// the number of periods (n), and epsilon, the approximation's accuracy
 	// Side effect: modifies the class variable iterationCounter.
     public static double bisectionSolver(double loan, double rate, int n, double epsilon) {  
+        iterationCounter = 0;
+        
         double L = loan / n; 
         
-        double H = 500000.0; 
+        // תיקון: הגדרת H לערך נמוך יותר (Loan) כדי לצמצם את הטווח ההתחלתי.
+        double H = loan; 
         
+        // מוודאים ש-H גבוה מספיק (במקרה קיצוני, יכפיל פעם אחת)
         while (endBalance(loan, rate, n, H) > 0) {
              H = H * 2.0;
         }
-
+        
+        // שאר הלוגיקה נשארת זהה:
         while ((H - L) > epsilon) {
             
             double g = (L + H) / 2.0;
