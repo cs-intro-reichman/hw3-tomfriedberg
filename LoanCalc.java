@@ -32,7 +32,8 @@ public class LoanCalc {
         double currentBalance = loan;
         
         int i = 0;
-        while (i < n) {
+        while (i < n)
+		{
             currentBalance = currentBalance - payment;
             currentBalance = currentBalance * (1 + actualRate);
             i++;
@@ -53,7 +54,7 @@ public class LoanCalc {
         
         while (endBalance(loan, rate, n, g) > 0) {
             g = g + epsilon;
-            iterationCounter++;
+            iterationCounter++; 
         }
         
         return g;
@@ -69,11 +70,12 @@ public class LoanCalc {
         
         double L = loan / n; 
         
-        double H = L;
-        while (endBalance(loan, rate, n, H) > 0) {
-            H = H * 2; 
-        }
+        double H = loan * 2.0; 
         
+        while (endBalance(loan, rate, n, H) > 0) {
+             H = H * 2.0;
+        }
+
         while ((H - L) > epsilon) {
             
             double g = (L + H) / 2.0;

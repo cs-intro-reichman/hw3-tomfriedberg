@@ -77,17 +77,18 @@ public class Anagram {
 	// as is. For example, the string "What? No way!" becomes "whatnoway"
 	public static String preProcess(String str) {
 		String lowerCaseStr = str.toLowerCase();
-
         String cleaned = ""; 
-
-        for (int i = 0; i < lowerCaseStr.length(); i++) {
+        
+        int i = 0;
+        while (i < lowerCaseStr.length()) {
             char c = lowerCaseStr.charAt(i);
             
-            if (c >= 'a' && c <= 'z') {
+            // שמירת אותיות קטנות ורווחים בלבד
+            if ((c >= 'a' && c <= 'z') || c == ' ') { 
                 cleaned = cleaned + c; 
             }
+            i++;
         }
-        
         return cleaned;
 	} 
 	   

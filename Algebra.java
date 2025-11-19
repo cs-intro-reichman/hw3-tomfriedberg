@@ -26,103 +26,168 @@ public class Algebra {
 	// Returns x1 + x2
 	public static int plus(int x1, int x2) {
 		
-		
-		for(int n = 1;n<=x2;n++)
-	{
-		x1++;
-	}
-		return x1;
+        int result = x1;
+        
+        if (x2 > 0) {
+            int i = 0;
+            while (i < x2) {
+                result++;
+                i++;
+            }
+        } else if (x2 < 0) {
+            int i = 0;
+            while (i > x2) { 
+                result--;
+                i--;
+            }
+        }
+        return result;
 	}
 
 	// Returns x1 - x2
 	public static int minus(int x1, int x2) {
 		
-		for(int n = 1;n<=x2;n++)
-	{
-		x1--;
-	}
-		return x1;
+		if (x2 < 0) {
+            return plus(x1, minus(0, x2)); 
+        }
+        
+        int result = x1;
+        int i = 0;
+        while (i < x2) {
+            result--;
+            i++;
+        }
+        return result;
 	}
 
 	// Returns x1 * x2
 	public static int times(int x1, int x2) {
 		
-		int m = x1;
-		for(int n = 1;n<=m;n++)
-	{
-			for(int i = 1;i<x2;i++)
-		{
-			x1++;
-		}
-	}
-		return x1;
+		boolean negativeResult = false;
+        if ((x1 < 0 && x2 > 0) || (x1 > 0 && x2 < 0)) {
+            negativeResult = true;
+        }
+        
+        int absX1 = x1;
+        if (x1 < 0) {
+            absX1 = minus(0, x1);
+        }
+        int absX2 = x2;
+        if (x2 < 0) {
+            absX2 = minus(0, x2);
+        }
+        
+        int result = 0;
+        int i = 0;
+        while (i < absX2) {
+            result = plus(result, absX1);
+            i++;
+			}
+        
+        if (negativeResult) {
+            return minus(0, result);
+        }
+        return result;
 	}
 
 	// Returns x^n (for n >= 0)
-	public static int pow(int x, int n) {
-		int m = x;
-
-		if(n==0)
-		{
-			return 1;
-		}
-
-		for(int l = 1;l<n;l++)
-		{
-			x = times(x, m);
-		}
-		return x;
+	public static int pow(int x, int n) 
+	{
+        if (n < 0) {
+            return 0;
+        }
+        if (n == 0) {
+            return 1;
+        }
+        
+        if (x < 0) {
+            if (mod(n, 2) == 0) {
+                return pow(minus(0, x), n);
+            } else {
+                return minus(0, pow(minus(0, x), n));
+            }
+        }
+        
+        int result = 1;
+        int i = 0;
+        
+        while (i < n) {
+            result = times(result, x);
+            i++;
+        }
+        
+        return result;
 	}
+
+		
+
+	
 
 	// Returns the integer part of x1 / x2 
 	public static int div(int x1, int x2) {
-		int m = 0;
-
-		while(x1>=x2)
-		{
-			x1 = minus(x1, x2);
-			m++;
-		}
-		return m;
+		if (x2 == 0) {
+            return 0; 
+        }
+        
+        boolean negativeResult = false;
+        if ((x1 < 0 && x2 > 0) || (x1 > 0 && x2 < 0)) {
+            negativeResult = true;
+        }
+        
+        int absX1 = x1;
+        if (x1 < 0) {
+            absX1 = minus(0, x1);
+        }
+        int absX2 = x2;
+        if (x2 < 0) {
+            absX2 = minus(0, x2);
+        }
+        
+        int count = 0;
+        int tempX1 = absX1;
+        
+        while (tempX1 >= absX2) {
+            tempX1 = minus(tempX1, absX2);
+            count++;
+        }
+        
+        if (negativeResult) {
+            return minus(0, count);
+        }
+        return count;
 	}
 
 	// Returns x1 % x2
 	public static int mod(int x1, int x2) {
-		int m = 0;
+		if (x2 == 0) {
+            return 0; 
+        }
+        
+        if (x1 < 0 || x2 < 0) {
+             return minus(x1, times(div(x1, x2), x2));
+        }
 
-		while(x1>=x2)
-		{
-			x1 = minus(x1, x2);
-			m++;
-		}
-		return x1;
+        int tempX1 = x1;
+        
+        while (tempX1 >= x2) {
+            tempX1 = minus(tempX1, x2);
+        }
+        
+        return tempX1;
 	}	
 
 	// Returns the integer part of sqrt(x) 
 	public static int sqrt(int x) 
 	{
-		if (x == 0 || x == 1) 
-		{
-        return x;
-    }
-
-    int low = 1;
-    int high = x;
-    int result = 0; 
-
-    while (low <= high) {
-        
-        int mid = div(plus(low, high), 2); 
-        int midSquared = pow(mid, 2); 
-
-        if (minus(x, midSquared) >= 0) { 
-            result = mid; 
-            low = plus(mid, 1);
-        } else {
-            high = minus(mid, 1);
+		if (x < 0) {
+            return 0;
         }
+        
+        int i = 0;
+        while (times(i, i) <= x) {
+            i++;
+        }
+        
+        return minus(i, 1);
     }
-
-    return result;
-	}	  	  
 }
