@@ -29,28 +29,43 @@ public class Anagram {
 	// Returns true if the two given strings are anagrams, false otherwise.
 	public static boolean isAnagram(String str1, String str2) {
 
-        String cleaned1 = preProcess(str1);
+       String cleaned1 = preProcess(str1);
         String cleaned2 = preProcess(str2);
 
-        if (cleaned1.length() != cleaned2.length()) {
+        int length1 = 0;
+        int i = 0;
+        while (i < cleaned1.length()) {
+            if (cleaned1.charAt(i) != ' ') {
+                length1++;
+            }
+            i++;
+        }
+        int length2 = 0;
+        i = 0;
+        while (i < cleaned2.length()) {
+            if (cleaned2.charAt(i) != ' ') {
+                length2++;
+            }
+            i++;
+        }
+        
+
+        if (length1 != length2) {
             return false;
         }
         
-        // שימוש במערך בגודל 256 (לכל תווי ASCII/Unicode) או 26 (לאותיות קטנות בלבד).
-        // נשתמש ב-26 כיוון ש-preProcess מבטיח רק אותיות קטנות.
         int[] letterCounts = new int[26];
         
-        // ספירת מחרוזת 1 (+1)
-        int i = 0;
+ 
+        i = 0;
         while (i < cleaned1.length()) {
             char c = cleaned1.charAt(i);
-            if (c != ' ') { // מתעלמים מרווחים (אם נותרו כאלה)
+            if (c != ' ') { 
                 letterCounts[c - 'a']++;
             }
             i++;
         }
         
-        // חיסור מחרוזת 2 (-1)
         i = 0;
         while (i < cleaned2.length()) {
             char c = cleaned2.charAt(i);
@@ -59,7 +74,7 @@ public class Anagram {
             }
             i++;
         }
-		
+        
         i = 0;
         while (i < 26) {
             if (letterCounts[i] != 0) {
@@ -69,11 +84,13 @@ public class Anagram {
         }
         
         return true;
+    
 	}
 	   
 	// Returns a preprocessed version of the given string: all the letter characters are converted
 	// to lower-case, and all the other characters are deleted, except for spaces, which are left
 	// as is. For example, the string "What? No way!" becomes "whatnoway"
+
 	public static String preProcess(String str) {
 		String lowerCaseStr = str.toLowerCase();
         String cleaned = ""; 
@@ -81,8 +98,7 @@ public class Anagram {
         int i = 0;
         while (i < lowerCaseStr.length()) {
             char c = lowerCaseStr.charAt(i);
-            
-            // שמירת אותיות קטנות ורווחים בלבד
+
             if ((c >= 'a' && c <= 'z') || c == ' ') { 
                 cleaned = cleaned + c; 
             }
