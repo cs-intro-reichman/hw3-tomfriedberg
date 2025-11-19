@@ -25,43 +25,104 @@ public class Algebra {
 
 	// Returns x1 + x2
 	public static int plus(int x1, int x2) {
-		// Replace the following statement with your code
-		return 0;
+		
+		
+		for(int n = 1;n<=x2;n++)
+	{
+		x1++;
+	}
+		return x1;
 	}
 
 	// Returns x1 - x2
 	public static int minus(int x1, int x2) {
-		// Replace the following statement with your code
-		return 0;
+		
+		for(int n = 1;n<=x2;n++)
+	{
+		x1--;
+	}
+		return x1;
 	}
 
 	// Returns x1 * x2
 	public static int times(int x1, int x2) {
-		// Replace the following statement with your code
-		return 0;
+		
+		int m = x1;
+		for(int n = 1;n<=m;n++)
+	{
+			for(int i = 1;i<x2;i++)
+		{
+			x1++;
+		}
+	}
+		return x1;
 	}
 
 	// Returns x^n (for n >= 0)
 	public static int pow(int x, int n) {
-		// Replace the following statement with your code
-		return 0;
+		int m = x;
+
+		if(n==0)
+		{
+			return 1;
+		}
+
+		for(int l = 1;l<n;l++)
+		{
+			x = times(x, m);
+		}
+		return x;
 	}
 
 	// Returns the integer part of x1 / x2 
 	public static int div(int x1, int x2) {
-		// Replace the following statement with your code
-		return 0;
+		int m = 0;
+
+		while(x1>=x2)
+		{
+			x1 = minus(x1, x2);
+			m++;
+		}
+		return m;
 	}
 
 	// Returns x1 % x2
 	public static int mod(int x1, int x2) {
-		// Replace the following statement with your code
-		return 0;
+		int m = 0;
+
+		while(x1>=x2)
+		{
+			x1 = minus(x1, x2);
+			m++;
+		}
+		return x1;
 	}	
 
 	// Returns the integer part of sqrt(x) 
-	public static int sqrt(int x) {
-		// Replace the following statement with your code
-		return 0;
+	public static int sqrt(int x) 
+	{
+		if (x == 0 || x == 1) 
+		{
+        return x;
+    }
+
+    int low = 1;
+    int high = x;
+    int result = 0; 
+
+    while (low <= high) {
+        
+        int mid = div(plus(low, high), 2); 
+        int midSquared = pow(mid, 2); 
+
+        if (minus(x, midSquared) >= 0) { 
+            result = mid; 
+            low = plus(mid, 1);
+        } else {
+            high = minus(mid, 1);
+        }
+    }
+
+    return result;
 	}	  	  
 }
